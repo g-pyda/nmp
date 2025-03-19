@@ -49,7 +49,7 @@ void lab_code() {
 
     std::cout << "Determinant: " << det << std::endl;
 
-    std::ofstream file ("coefficients.txt");
+    std::ofstream file ("coefficients/coefficients.txt");
 
     std::cout << "Coefficients for x^5, x^4, x^3, x^2, x^1, x^0" << std::endl;
     for(int i = 0; i < n; i++) {
@@ -62,7 +62,7 @@ void lab_code() {
     file.close();
 
 
-    std::ofstream data ("data.dat");
+    std::ofstream data ("data/data.dat");
 
     double xmin = 0, xmax = 3.0;
     double delta = (xmax - xmin)/300;
