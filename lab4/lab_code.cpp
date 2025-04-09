@@ -1,7 +1,6 @@
 // g++ -I ~/lapacke/lapacke/include/ -L ~/lapacke/lapacke/ main.cpp -lm -O3
 
 #include <iostream>
-#include "lapacke.h"
 #include <vector>
 #include <string>
 #include <fstream>
