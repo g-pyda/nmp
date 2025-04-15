@@ -36,7 +36,7 @@ void lab() {
     int itmax=150;
     double eps = pow(10.0,-8.0);
 
-    // initializing the matrix and dispalaying it
+    // initializing the matrix and displaying it
     std::vector<double> a(n*n, 0);
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
@@ -64,9 +64,9 @@ void lab() {
 
         for (int i = 0; i < n; i++) {
             x_m[i] = ((double)rand()) / (double)RAND_MAX;
-            std::cout << x_m[i] << " ";
+            //std::cout << x_m[i] << " ";
         }
-        std::cout << std::endl;
+        //std::cout << std::endl;
 
         double lambda_old = pow(10, 5);
 
@@ -88,7 +88,7 @@ void lab() {
             // gram_schmidt(n, y, x_m);
             // normalizing the vector
             for (int i = 0; i < n; i++) {
-                x_m[i] = y[i] / scalar(n, y, y);
+                x_m[i] = y[i] / std::sqrt(scalar(n, y, y));
             }
 
             file_val_dev << it << " " << lambda << std::endl;
@@ -98,11 +98,21 @@ void lab() {
             }
             lambda_old = lambda;
             x_m = y;
+            // std::cout << k << " " << it << " ";
+            // for (int i = 0; i < n; i++) {
+            //     std::cout << x_m[i] << " ";
+            // }
+            // std::cout << std::endl;
         }
 
         lambdas[k] = lambda_old;
         x[k] = x_m;
         file_val_dev.close();
+        // std::cout << k << " x in the end " ;
+        // for (int i = 0; i < n; i++) {
+        //     std::cout << x_m[i] << " ";
+        // }
+        // std::cout << std::endl;
     }
 
     for (int i = 0; i < n; i++) {
@@ -124,18 +134,11 @@ void lab() {
     std::ofstream file_arec_inv("arec_inv.dat");
 
     std::vector<double> arec(n*n, 0);
-    for (int k = 0; k < n; k++) {
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                arec[i*n + j] += lambdas[k] * x[k][i] * x[k][j];
-            }
-        }
-    }
-
     std::vector<double> arec_inv(n*n, 0);
     for (int k = 0; k < n; k++) {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
+                arec[i*n + j] += lambdas[k] * x[k][i] * x[k][j];
                 arec_inv[i*n + j] += (1.0 / lambdas[k]) * x[k][i] * x[k][j];
             }
         }
@@ -144,16 +147,13 @@ void lab() {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             file_arec << arec[i*n + j] << " ";
+            file_arec_inv << arec_inv[i*n + j] << " ";
+
         }
         file_arec << std::endl;
-    }
-
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            file_arec_inv << arec_inv[i*n + j] << " ";
-        }
         file_arec_inv << std::endl;
     }
+
     file_arec.close();
     file_arec_inv.close();
 }
@@ -168,7 +168,7 @@ void lab(int n, double eps, bool gram_schmidt) {
         std::filesystem::create_directory(case_dir);
     }
 
-    // initializing the matrix and dispalaying it
+    // initializing the matrix
     std::vector<double> a(n*n, 0);
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
@@ -177,9 +177,9 @@ void lab(int n, double eps, bool gram_schmidt) {
             } else if (std::abs(i - j) == 1) {
                 a[i*n + j] = 1.0;
             }
-            std::cout << a[i*n + j] << " ";
+            //std::cout << a[i*n + j] << " ";
         }
-        std::cout << std::endl;
+        //std::cout << std::endl;
     }
 
     std::ofstream file_vect(case_dir+"eigenvectors.dat");
@@ -221,7 +221,7 @@ void lab(int n, double eps, bool gram_schmidt) {
             // gram_schmidt(n, y, x_m);
             // normalizing the vector
             for (int i = 0; i < n; i++) {
-                x_m[i] = y[i] / scalar(n, y, y);
+                x_m[i] = y[i] / std::sqrt(scalar(n, y, y));
             }
 
             
@@ -290,19 +290,12 @@ void lab(int n, double eps, bool gram_schmidt) {
     std::ofstream file_arec_inv(case_dir+"arec_inv.dat");
 
     std::vector<double> arec(n*n, 0);
-    for (int k = 0; k < n; k++) {
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                arec[i*n + j] = lambdas[k] * x[k][i] * x[k][j];
-            }
-        }
-    }
-
     std::vector<double> arec_inv(n*n, 0);
     for (int k = 0; k < n; k++) {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                arec_inv[i*n + j] = (1.0 / lambdas[k]) * x[k][i] * x[k][j];
+                arec[i*n + j] += lambdas[k] * x[k][i] * x[k][j];
+                arec_inv[i*n + j] += (1.0 / lambdas[k]) * x[k][i] * x[k][j];
             }
         }
     }
@@ -310,16 +303,13 @@ void lab(int n, double eps, bool gram_schmidt) {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             file_arec << arec[i*n + j] << " ";
+            file_arec_inv << arec_inv[i*n + j] << " ";
+
         }
         file_arec << std::endl;
-    }
-
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            file_arec_inv << arec_inv[i*n + j] << " ";
-        }
         file_arec_inv << std::endl;
     }
+    
     file_arec.close();
     file_arec_inv.close();
 }
