@@ -8,5 +8,5 @@ int main() {
 
     //task for chebyshev nodes
     task(20+1, true);
-    task(30+1, true);
+    task(50+1, true);
 }

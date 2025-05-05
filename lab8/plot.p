@@ -46,7 +46,7 @@ plot \
 
 set out
 
-set term png size 600,600
+set term png size 1200,1200
 set ylabel "error"
 set xlabel "x"
 set out "./plots/cheb20_err.png"
@@ -60,22 +60,22 @@ set out
 set term png size 600,600
 set ylabel "test function and its interpolation"
 set xlabel "x"
-set out "./plots/cheb30.png"
+set out "./plots/cheb50.png"
 
 plot \
-    "./data/chebyshev30.dat" u 1:2 with lines  linecolor rgb "black" title "y(x)", \
-    "./data/chebyshev30.dat" u 1:3 with lines  linecolor rgb "red" title "W(x)", \
-    "./data/chebyshev30_nodes.dat" u 1:2 with points title "nodes"
+    "./data/chebyshev50.dat" u 1:2 with lines  linecolor rgb "black" title "y(x)", \
+    "./data/chebyshev50.dat" u 1:3 with lines  linecolor rgb "red" title "W(x)", \
+    "./data/chebyshev50_nodes.dat" u 1:2 with points title "nodes"
 
 set out
 
-set term png size 600,600
+set term png size 1200,1200
 set ylabel "error"
 set xlabel "x"
-set out "./plots/cheb30_err.png"
+set out "./plots/cheb50_err.png"
 
 plot \
-    "./data/chebyshev30.dat" u 1:4 with lines  linecolor rgb "black" title "err(x)", \
-    "./data/chebyshev30_nodes.dat" u 1:2 with points title "nodes"
+    "./data/chebyshev50.dat" u 1:4 with lines  linecolor rgb "black" title "err(x)", \
+    "./data/chebyshev50_nodes.dat" u 1:2 with points title "nodes"
 
 set out
