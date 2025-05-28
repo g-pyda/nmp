@@ -133,9 +133,9 @@ void task(bool Fletcher, double lambda_b = 0.1, bool largerA = false) {
         a_exact = {0.5, 10.0, -30.0, 0.7}, a = {1.0, 1.0, 1.0, 1.0};
     if (largerA) {
         a[0] = 10.0;
-        a[1] = 20.0;
-        a[2] = -60.0;
-        a[3] = 7.0;
+        a[1] = 10.0;
+        a[2] = 10.0;
+        a[3] = 10.0;
     }
     gen_equidistant(xmin, xmax, n, x);
     gen_y(x, a_exact, y, n);
